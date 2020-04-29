@@ -1,9 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import marked from "marked";
 import "./styles.scss";
 
 import Editor from "./Editor";
 import Preview from "./Preview";
+
+marked.setOptions({
+  breaks: true
+});
+
+const renderer = new marked.Renderer();
+renderer.link = function(href, title, text) {
+  return `<a target="_blank" href="${href}">${text}'</a>'`;
+};
+
+const initialState = `# Welcome to my React Markdown Previewer!
+
+## This is a sub-heading...
+### And here's some other cool stuff:
+  
+Heres some code, \`<div></div>\`, between 2 backticks.
+
+\`\`\`
+// this is multi-line code:
+
+function anotherExample(firstLine, lastLine) {
+  if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
+    return multiLineCode;
+  }
+}
+\`\`\`
+  
+You can also make text **bold**... whoa!
+Or _italic_.
+Or... wait for it... **_both!_**
+And feel free to go crazy ~~crossing stuff out~~.
+
+There's also [links](https://www.freecodecamp.com), and
+> Block Quotes!
+
+And if you want to get really crazy, even tables:
+
+Wild Header | Crazy Header | Another Header?
+------------ | ------------- | ------------- 
+Your content can | be here, and it | can be here....
+And here. | Okay. | I think we get it.
+
+- And of course there are lists.
+  - Some are bulleted.
+     - With different indentation levels.
+        - That look like this.
+
+
+1. And there are numbererd lists too.
+1. Use just 1s if you want! 
+1. But the list goes on...
+- Even if you use dashes or asterisks.
+* And last but not least, let's not forget embedded images:
+
+![React Logo w/ Text](https://goo.gl/Umyytc)
+`;
 
 const TopBar = () => {
   return (
@@ -14,13 +71,28 @@ const TopBar = () => {
 };
 
 const App = () => {
+  const [content, setContent] = useState(initialState);
+
+  // run a func that when a change happens to Editor, it shows in Preview
+  // i would need to run onChange on the textarea and update the state of the preview
+
+  function handleChange(e) {
+    return setContent(e.target.value);
+  }
+
+  function renderToMarkDown(content) {
+    return {
+      __html: marked(content, { renderer: renderer })
+    };
+  }
+
   return (
     <React.StrictMode>
       <div>
         <TopBar />
         <div className="App">
-          <Editor />
-          <Preview />
+          <Editor content={content} onChange={handleChange} />
+          <Preview content={renderToMarkDown(content)} />
         </div>
       </div>
     </React.StrictMode>
