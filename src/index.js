@@ -5,12 +5,23 @@ import "./styles.scss";
 import Editor from "./Editor";
 import Preview from "./Preview";
 
+const TopBar = () => {
+  return (
+    <div className="topbar">
+      <h1>Mac-Down</h1>
+    </div>
+  );
+};
+
 const App = () => {
   return (
     <React.StrictMode>
-      <div className="App">
-        <Editor />
-        <Preview />
+      <div>
+        <TopBar />
+        <div className="App">
+          <Editor />
+          <Preview />
+        </div>
       </div>
     </React.StrictMode>
   );
