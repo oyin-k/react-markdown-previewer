@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function Editor() {
+export default function Editor({ content, onChange }) {
   return (
-    <div id="editor">
-      <h1>I am the Editor</h1>
+    <div className="editor-box">
+      <textarea id="editor" value={content} onChange={onChange} />
     </div>
   );
 }
