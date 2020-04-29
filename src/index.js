@@ -73,9 +73,6 @@ const TopBar = () => {
 const App = () => {
   const [content, setContent] = useState(initialState);
 
-  // run a func that when a change happens to Editor, it shows in Preview
-  // i would need to run onChange on the textarea and update the state of the preview
-
   function handleChange(e) {
     return setContent(e.target.value);
   }
