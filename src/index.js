@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import marked from "marked";
 import "./styles.scss";
 
+import TopBar from "./TopBar";
 import Editor from "./Editor";
 import Preview from "./Preview";
 
@@ -61,14 +62,6 @@ And here. | Okay. | I think we get it.
 
 ![React Logo w/ Text](https://goo.gl/Umyytc)
 `;
-
-const TopBar = () => {
-  return (
-    <div className="topbar">
-      <h1>Mac-Down</h1>
-    </div>
-  );
-};
 
 const App = () => {
   const [content, setContent] = useState(initialState);
